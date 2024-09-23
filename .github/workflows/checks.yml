@@ -1,35 +1,41 @@
 name: Django CI
 
+# 워크플로우가 'push' 이벤트(코드가 푸시될 때) 실행됩니다.
 on:
   push:
 
 jobs:
   ci:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04  # 워크플로우는 Ubuntu 20.04 환경에서 실행됩니다.
     env:
+      # 환경 변수 설정: 데이터베이스 정보 및 Django 비밀 키를 지정
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
       DB_USER: root
       DB_PASS: 1234
       DB_NAME: oz_django
       SECRET_KEY: xcvrvzxzxjbbkktniwfqa
+    
     steps:
       - name: Check out the codes
+        # GitHub 저장소의 코드를 체크아웃(다운로드)합니다.
         uses: actions/checkout@v2
 
       - name: Setup python environment
+        # Python 3.12 환경을 설정합니다.
         id: setup-python
         uses: actions/setup-python@v2
         with:
           python-version: 3.12
 
       - name: Set timezone to KST
+        # 타임존을 KST(한국 표준시)로 설정합니다.
         run: |
           sudo rm /etc/localtime
           sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
       # Start Mysql
-      # https://ovirium.com/blog/how-to-make-mysql-work-in-your-github-actions/
+      # MySQL 서버를 시작하고, 사용자 비밀번호를 설정한 후 데이터베이스를 만듭니다.
       - name: Start Mysql
         run: |
           sudo systemctl start mysql
@@ -37,26 +43,32 @@ jobs:
           mysql -e 'CREATE DATABASE ${{ env.DB_NAME }};' -u${{ env.DB_USER }} -p${{ env.DB_PASS }}
 
       - name: Install Poetry
+        # Poetry(의존성 관리 도구)를 설치합니다.
         run: |
-          curl -sSL curl -sSL https://install.python-poetry.org | python3 -
+          curl -sSL https://install.python-poetry.org | python3 -
           echo "${HOME}/.local/bin" >> $GITHUB_PATH
 
       - name: Install dependencies
+        # Poetry를 사용하여 프로젝트의 의존성 패키지를 설치합니다.
         run: |
           poetry install
 
       - name: Run black
+        # 코드 포맷터 Black을 사용하여 코드 스타일을 체크합니다. (변경사항이 있으면 실패)
         run: |
           poetry run black . --check
 
       - name: Run isort
+        # Import 정렬 도구 isort를 사용해 Import 구문을 정렬하고, 스타일을 체크합니다. (--diff는 변경사항을 출력)
         run: |
           poetry run isort . --check --diff
 
       - name: Run Mypy
+        # 정적 타입 검사 도구 Mypy로 타입 검사를 실행합니다.
         run: |
           poetry run mypy .
 
       - name: Test python project
+        # Django 테스트를 실행하여 프로젝트의 테스트 코드가 통과하는지 확인합니다.
         run: |
           poetry run python manage.py test
