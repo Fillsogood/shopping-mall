@@ -5,5 +5,4 @@
 - poetry install
 
 ### CI/CD 설정
-- Docker (CD)
 - git action 사용 (CI)
