@@ -8,7 +8,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 django = "^5.1.1"
+black = "^24.8.0"
+isort = "^5.13.2"
+mypy = "^1.11.2"
+django-stubs = "^5.0.4"
 
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
 
 [build-system]
 requires = ["poetry-core"]
