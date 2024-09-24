@@ -12,6 +12,9 @@ black = "^24.8.0"
 isort = "^5.13.2"
 mypy = "^1.11.2"
 django-stubs = "^5.0.4"
+mysqlclient = "^2.2.4"
+pillow = "^10.4.0"
+python-dotenv = "^1.0.1"
 
 [tool.black]
 line-length = 120
