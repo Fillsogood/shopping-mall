@@ -29,3 +29,23 @@
 
 ### CI/CD 설정
 - github\workflow\checks.yml에 CI 작성
+
+## 2일차
+
+### 모델 정의
+- products
+- orders
+- orderitems
+- common
+- users
+- payment
+- address
+
+### 도커 설정
+- 도커 허브 들어가서 Access Token 발급
+- Github 프로젝트에 secret variable 등록
+    >DOCKERHUB_USER
+    >DOCKERHUB_TOKEN
+- Dockerfile 생성
+- .dockerignore 생성
+- 구조 변경
