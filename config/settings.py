@@ -42,13 +42,13 @@ DJANGO_SYSTEM_APPS = [
 ]
 
 CUSTOM_USER_APPS = [
-    "users",
-    "common",
-    "products",
-    "orders",
-    "orderitems",
-    "payments",
-    "address",
+    "apps.users",
+    "apps.products",
+    "apps.orders",
+    "apps.orderitems",
+    "apps.payments",
+    "apps.address",
+    "apps.base",
 ]
 
 
