@@ -49,3 +49,17 @@
 - Dockerfile 생성
 - .dockerignore 생성
 - 구조 변경
+
+## 3일차
+
+### 심볼 설정
+
+-window: cmd 관리자 권한으로 설정후 mklink settings.py local.py 로컬에서 실행
+
+- mklink settings.py prod.py 서버에서 실행
+
+-Mac: ln -sf local.py settings.py 로컬 , ln -sf prod.py settings.py 서버
+
+### Dockerfile 및 yml 및 entrypoint.sh 코드 생성
+- nginx.conf 설정
+- be     | exec ./entrypoint.sh: no such file or directory 오류 수정 중
