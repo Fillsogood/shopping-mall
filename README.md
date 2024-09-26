@@ -63,3 +63,9 @@
 ### Dockerfile 및 yml 및 entrypoint.sh 코드 생성
 - nginx.conf 설정
 - be     | exec ./entrypoint.sh: no such file or directory 오류 수정 중
+
+## 4일차
+
+- DB 이미지 설정
+
+- .entrypoint.sh 권한 오류 설정
