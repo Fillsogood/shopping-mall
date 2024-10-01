@@ -1,11 +1,10 @@
 # Python
 __pycache__/
 *.pyc
-.mypy_cache
+.mypy_cache/
 .coverage
-.venv
+.venv/
 .python-version
-
 
 # Git
 .gitignore
@@ -13,6 +12,7 @@ __pycache__/
 
 # IDE
 .idea/
+.vscode/
 
 # OS
 .DS_Store
@@ -22,3 +22,8 @@ db.sqlite3
 
 # other
 profile_pictures/
+
+# Docker
+node_modules
+.git
+*.log
