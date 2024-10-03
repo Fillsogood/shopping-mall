@@ -21,8 +21,9 @@ class SignupViewSet(viewsets.ViewSet):
     serializer_class = UserSignupSerializer
     authentication_classes = []
     permission_classes = [AllowAny]
+
     # 회원가입
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -35,7 +36,7 @@ class SignupViewSet(viewsets.ViewSet):
 
 
 class JWTLoginView(TokenObtainPairView):
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     # 로그인 시 토큰 발급
     def post(self, request: Request) -> Response:
         try:
@@ -67,7 +68,7 @@ class JWTLoginView(TokenObtainPairView):
 
 class JWTLogoutView(viewsets.ViewSet):
     # 로그아웃
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     def post(self, request: Request) -> Response:
         response = Response({"msg": "로그아웃 성공"}, status=status.HTTP_200_OK)
         response.delete_cookie("AUT_REF")  # 쿠키에서 리프레시 토큰 삭제
@@ -77,8 +78,9 @@ class JWTLogoutView(viewsets.ViewSet):
 class JWTRefreshView(viewsets.ViewSet):
     permission_classes = [AllowAny]
     authentication_classes = []
+
     # 토큰 재발급
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     def post(self, request: Request) -> Response:
         refresh_token = request.COOKIES.get("AUT_REF")
         if refresh_token:
@@ -108,15 +110,16 @@ class JWTRefreshView(viewsets.ViewSet):
 class UserDetailViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
     # 회원정보 조회
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         user = cast(User, request.user)
         serializer = UserDetailSerializer(user)
         return Response(serializer.data)
 
     # 회원정보 수정
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     def update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         user = cast(User, request.user)
         serializer = UserDetailSerializer(user, data=request.data)
@@ -126,7 +129,7 @@ class UserDetailViewSet(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # 회원탈퇴
-    @extend_schema(tags=['User'])
+    @extend_schema(tags=["User"])
     def destroy(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         user = cast(User, request.user)
         user.delete()
