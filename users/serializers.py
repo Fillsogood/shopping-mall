@@ -1,6 +1,5 @@
 from typing import Any, Dict
 
-from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 from .models import User
@@ -42,7 +41,7 @@ class UserSignupSerializer(serializers.ModelSerializer[User]):
 class UserDetailSerializer(serializers.ModelSerializer[User]):
     class Meta:
         model = User
-        fields = ["id", "user_id", "username", "email", "nickName", "phone_number"]  # 수정 가능한 필드만 포함
+        fields = ["id", "username", "email", "nickName", "phone_number"]  # 수정 가능한 필드만 포함
         extra_kwargs = {"password": {"write_only": True}}  # 비밀번호는 쓰기 전용
 
     def update(self, instance: User, validated_data: Dict[str, Any]) -> User:
