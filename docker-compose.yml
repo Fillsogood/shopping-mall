@@ -21,8 +21,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: be
+    ports:
+    - "8000:8000"  # 외부에서 접근할 수 있는 포트 설정
     volumes:
-      - ./apps:/backend/apps
       - ./config:/backend/config
     expose:
       - "8000"
@@ -37,7 +38,7 @@ services:
       DB_HOST: db
       DB_PORT: "3306"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      test: ["CMD", "curl", "-f", "http://be:8000/admin/"]
       interval: 30s
       timeout: 10s
       retries: 5

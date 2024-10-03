@@ -1,7 +1,7 @@
 from django.db import models
 
-from apps.base.models import BaseModel
-from apps.orders.models import Order
+from base.models import BaseModel
+from orders.models import Order
 
 
 class Payment(BaseModel):

@@ -1,7 +1,7 @@
 from django.db import models
 
-from apps.base.models import BaseModel
-from apps.users.models import User
+from base.models import BaseModel
+from users.models import User
 
 
 class Address(BaseModel):

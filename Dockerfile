@@ -22,16 +22,19 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi || echo "No logs available."
 
 # 나머지 파일 복사
-COPY ./manage.py ./manage.py
-COPY ./config ./config
-COPY ./apps ./apps
+COPY config ./config
+COPY users ./users
+COPY products ./products
+COPY orders ./orders
+COPY orderitems ./orderitems
+COPY payments ./payments
+COPY address ./address
+COPY base ./base
+COPY manage.py ./manage.py
 
 # entrypoint.sh 파일을 복사하고 실행 권한 부여
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
-
-# 전체 권한을 설정하는 부분은 제거해도 됩니다.
-# 실행 권한만 필요한 경우, 해당 파일에 대해서만 권한을 부여하면 됩니다.
 
 # 컨테이너 시작 시 entrypoint.sh 스크립트를 실행하도록 설정
 ENTRYPOINT ["./entrypoint.sh"]

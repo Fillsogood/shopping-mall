@@ -9,23 +9,17 @@ from django.db import models
 
 
 class UserManager(BaseUserManager["User"]):
-
-    def create_user(self, email: str, username: str, password: str, phone_number: str) -> Any:
-        if not email:
+    def create_user(self, user_id: str, username: str, password: str) -> Any:
+        if not user_id:
             raise ValueError("User ID must be provided")
 
-        user = self.model(email=email, username=username, phone_number=phone_number)
+        user = self.model(user_id=user_id, username=username)  # username 추가
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email: str, username: str, password: str, phone_number: str) -> Any:
-        superuser = self.create_user(
-            email=email,
-            username=username,
-            password=password,
-            phone_number=phone_number,
-        )
+    def create_superuser(self, user_id: str, username: str, password: str) -> Any:
+        superuser = self.create_user(user_id=user_id, username=username, password=password)  # username 추가
         superuser.is_staff = True
         superuser.is_superuser = True
         superuser.is_active = True
@@ -34,9 +28,10 @@ class UserManager(BaseUserManager["User"]):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    user_id = models.CharField(max_length=100, unique=True)
     nickName = models.CharField(max_length=100, unique=True)
     username = models.CharField(max_length=100)
-    email = models.CharField(max_length=100, unique=True)  # 유저 ID
+    email = models.EmailField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)  # 전화번호
 
     is_seller = models.BooleanField(default=False)  # 판매자 여부
@@ -52,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "user_id"
     REQUIRED_FIELDS = ["nickName"]
 
     class Meta:

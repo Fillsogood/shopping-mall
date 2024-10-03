@@ -9,11 +9,12 @@ from .models import User
 class UserSignupSerializer(serializers.ModelSerializer[User]):
     class Meta:
         model = User
-        fields = ("nickName", "username", "email", "password", "phone_number")
+        fields = ("user_id", "nickName", "username", "email", "password", "phone_number")
         extra_kwargs = {
             "password": {"write_only": True},
             "email": {"required": True},
             "nickName": {"required": True},
+            "user_id": {"required": True},
         }
 
     def create(self, validated_data: Dict[str, Any]) -> User:
@@ -21,6 +22,11 @@ class UserSignupSerializer(serializers.ModelSerializer[User]):
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+    def validate_user_id(self, user_id: str) -> str:
+        if User.objects.filter(user_id=user_id).exists():
+            raise serializers.ValidationError("유저 ID가 이미 존재합니다.")
+        return user_id
 
     def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
@@ -36,7 +42,7 @@ class UserSignupSerializer(serializers.ModelSerializer[User]):
 class UserDetailSerializer(serializers.ModelSerializer[User]):
     class Meta:
         model = User
-        fields = ["id", "username", "email", "nickName", "phone_number"]  # 수정 가능한 필드만 포함
+        fields = ["id", "user_id", "username", "email", "nickName", "phone_number"]  # 수정 가능한 필드만 포함
         extra_kwargs = {"password": {"write_only": True}}  # 비밀번호는 쓰기 전용
 
     def update(self, instance: User, validated_data: Dict[str, Any]) -> User:

@@ -23,8 +23,6 @@ class SignupViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
 
     @extend_schema(
-        request=UserSignupSerializer,
-        responses={201: UserSignupSerializer, 400: None},
         operation_id="createUser",
         description="사용자를 생성합니다.",
     )
@@ -41,25 +39,13 @@ class SignupViewSet(viewsets.ViewSet):
 
 class JWTLoginView(TokenObtainPairView):
     @extend_schema(
-        request={
-            "type": "object",
-            "properties": {
-                "email": {"type": "string"},
-                "password": {"type": "string"},
-            },
-            "required": ["email", "password"],  # 필수 필드 지정
-        },
-        responses={
-            200: {"type": "object", "properties": {"access": {"type": "string"}, "refresh": {"type": "string"}}},
-            401: None,
-        },
         operation_id="loginUser",
         description="사용자가 로그인하여 JWT 토큰을 발급받습니다.",
     )
     def post(self, request: Request) -> Response:
         try:
             user = authenticate(
-                request=request, user_id=request.data.get("email"), password=request.data.get("password")
+                request=request, user_id=request.data.get("user_id"), password=request.data.get("password")
             )
             if user is not None:
                 user.last_login = timezone.now()
@@ -86,7 +72,6 @@ class JWTLoginView(TokenObtainPairView):
 
 class JWTLogoutView(viewsets.ViewSet):
     @extend_schema(
-        responses={200: {"type": "object", "properties": {"msg": {"type": "string"}}}},
         operation_id="logoutUser",
         description="사용자를 로그아웃합니다.",
     )
@@ -101,7 +86,6 @@ class JWTRefreshView(viewsets.ViewSet):
     authentication_classes = []
 
     @extend_schema(
-        responses={200: {"type": "object", "properties": {"access": {"type": "string"}}}, 401: None},
         operation_id="refreshToken",
         description="리프레시 토큰을 사용하여 새로운 액세스 토큰을 발급받습니다.",
     )
