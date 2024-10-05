@@ -13,7 +13,7 @@ urlpatterns = [
     path("api/redoc/", SpectacularRedocView.as_view(), name="redoc"),
     path("api/v1/users/", include("users.urls")),
     path("api/v1/products/", include("products.urls")),
-    # path("api/v1/orders/", include("orders.urls")),
+    path("api/v1/orders/", include("orders.urls")),
     # path("api/v1/address/", include("address.urls")),
     # path("api/v1/payments/", include("payments.urls")),
     # path("api/v1/orderitems/", include("orderitems.urls")),
