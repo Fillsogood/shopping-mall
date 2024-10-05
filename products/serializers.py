@@ -8,6 +8,7 @@ class ProductSerializer(serializers.ModelSerializer[Product]):
         model = Product
         fields = "__all__"
 
-class ProductDetailSerializer(ProductSerializer):
+
+class ProductDetailSerializer(serializers.ModelSerializer[Product]):
     class Meta(ProductSerializer.Meta):
         pass

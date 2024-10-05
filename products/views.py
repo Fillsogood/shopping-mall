@@ -46,7 +46,9 @@ class ProductDetailViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     # 제품 수정
-    @extend_schema(tags=["Product"], request=ProductDetailSerializer, responses={200: ProductDetailSerializer, 400: str, 404: str})
+    @extend_schema(
+        tags=["Product"], request=ProductDetailSerializer, responses={200: ProductDetailSerializer, 400: str, 404: str}
+    )
     def update(self, request: Request, pk: int) -> Response:
         product = get_object_or_404(self.queryset, pk=pk)
         serializer = ProductDetailSerializer(product, data=request.data, partial=True)
@@ -58,6 +60,6 @@ class ProductDetailViewSet(viewsets.ViewSet):
     # 제품 삭제
     @extend_schema(tags=["Product"], responses={204: str, 404: str})
     def destroy(self, request: Request, pk: int) -> Response:
-        product = self.get_object(pk)
+        product = get_object_or_404(self.queryset, pk=pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
