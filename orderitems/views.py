@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db.models.query import QuerySet
 from django.http import Http404
 from drf_spectacular.utils import extend_schema
@@ -6,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from typing import Any
+
 from .models import OrderItem
 from .serializers import OrderItemSerializer
 
