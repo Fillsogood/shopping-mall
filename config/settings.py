@@ -97,6 +97,9 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "ShoppingMall API Documentation",
     "DESCRIPTION": "This is a description of ShoppingMall API",
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SECURITY': [{'Bearer': []}],
 }
 
 # simple-jwt 설정

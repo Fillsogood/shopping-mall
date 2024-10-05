@@ -108,6 +108,7 @@ class JWTRefreshView(viewsets.ViewSet):
 
 
 class UserDetailViewSet(viewsets.ViewSet):
+    serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
@@ -115,14 +116,14 @@ class UserDetailViewSet(viewsets.ViewSet):
     @extend_schema(tags=["User"])
     def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         user = cast(User, request.user)
-        serializer = UserDetailSerializer(user)
+        serializer = self.serializer_class(user)
         return Response(serializer.data)
 
     # 회원정보 수정
     @extend_schema(tags=["User"])
     def update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         user = cast(User, request.user)
-        serializer = UserDetailSerializer(user, data=request.data)
+        serializer = self.serializer_class(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
