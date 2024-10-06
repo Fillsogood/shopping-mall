@@ -156,3 +156,4 @@
  - payment 추가 예정
  - TDD 적용 예정
  - 도커 자동 빌드 예정 도커 CI 추가 예정
+ - certbot 설정 예정 (https 적용)
