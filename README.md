@@ -125,3 +125,19 @@
 
  - 간단한 api만 넣어서 추후에 심오하게 바꿀 예정 
  - payment 추가 예정
+ - TDD 적용 예정
+
+## 11일차
+ - 도커 배포
+ - aws 설정
+  - ec2 설정
+  - ec2 shell 접속
+  - 보안 그룹 인바인드 규칙 설정
+  - 도커 설치
+   > sudo apt-get update
+   > sudo apt-get install -y docker.io
+   > sudo apt install docker-compose
+  - git clone 후 docker-compose up -d 실행
+   > clone 후 .env 파일 생성 후 환경변수 등록
+   > docker-compose up -d 실행
+   > docker ps 실행 후 정상적으로 실행되었는지 확인
