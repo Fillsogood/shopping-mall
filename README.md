@@ -137,6 +137,12 @@
    > sudo apt-get update
    > sudo apt-get install -y docker.io
    > sudo apt install docker-compose
+   - 도커 사용자 그룹 추가 (도커 down 하고 싶을 때)
+     > sudo systemctl start docker
+     > sudo usermod -aG docker $USER
+     > ls -l /var/run/docker.sock
+     > sudo chmod 666 /var/run/docker.sock
+     > sudo reboot
   - git clone 후 docker-compose up -d 실행
    > clone 후 .env 파일 생성 후 환경변수 등록
    > docker-compose up -d 실행
